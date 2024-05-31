@@ -1,24 +1,30 @@
-# Compiled class file
-*.class
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
 
-# Log file
-*.log
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-# BlueJ files
-*.ctxt
+contract DegenToken is ERC20, Ownable {
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+       constructor(address initialOwner) ERC20("Degen", "DGN") Ownable(initialOwner) {}
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+        function mint(address to, uint256 amount) public onlyOwner {
+            _mint(to, amount);
+    }
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+    function transferTokens(address to, uint256 amount) public {
+        _transfer(msg.sender, to, amount);
+    }
+
+    function redeemTokens(uint256 amount) public {
+        _burn(msg.sender, amount);
+    }
+
+    function checkTokenBalance(address account) public view returns (uint256) {
+        return balanceOf(account);
+    }
+
+    function burnTokens(uint256 amount) public {
+        _burn(msg.sender, amount);
+    }
+}
