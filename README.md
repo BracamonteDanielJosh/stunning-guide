@@ -1,7 +1,4 @@
-
-#Project Title
-
-DegenToken
+# DegenToken
 
 ## Overview
 
